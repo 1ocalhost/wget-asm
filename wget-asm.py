@@ -697,7 +697,7 @@ class ExecutorMaker:
         url_obj = urlparse(url)
         assert url_obj.scheme == 'http'
 
-        ip = socket.gethostbyname(url_obj.hostname)
+        ip = self._resolve_dns(url_obj.hostname)
         ip_bytes = int(ipaddress.IPv4Address(ip)).to_bytes(4, 'big')
         port = url_obj.port or 80
         port_bytes = port.to_bytes(2, 'big')
@@ -727,6 +727,17 @@ class ExecutorMaker:
             output_file=output_file,
             all=all,
         )
+
+    @staticmethod
+    def _resolve_dns(name):
+        print(f'Resolving the IP address of {name}...')
+        try:
+            ip = socket.gethostbyname(name)
+            print(f'IP address for {name} is {ip}')
+            return ip
+        except Exception:
+            print('Failed to resolve, aborted.')
+            exit()
 
     def _get_asm_code(self, remote_addr, send_data, send_len, out_file):
         define = self.impl.define
@@ -1042,3 +1053,4 @@ def main():
 
 if __name__ == '__main__':
     main()
+
