@@ -996,8 +996,7 @@ def echo_encode(data):
         0x0B: 'v',
         0x0C: 'f',
         0x0D: 'r',
-        0x1B: 'E',
-        0x1B: 'E',
+        0x1B: 'e',
         0x5C: '\\',
     }
 
@@ -1053,4 +1052,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
